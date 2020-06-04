@@ -1,0 +1,110 @@
+<resources>
+    <string name="app_name">Excel Android</string>
+    // STRING PARA VIEWHOLDER
+    <string name="cantidad">XXX</string>
+    <string name="descripccion">camilo</string>
+    <string name="dibujo">XXX</string>
+    <string name="titulo_cantidad">CODIGO</string>
+    <string name="titulo_descripccion">NOMBRE PLANO</string>
+    <string name="titulo_dibiujo">DIBUJO</string>
+    // FIN STRING PARA VIEWHOLDER
+
+    // STRING VISTA PDF INICIAL
+    <string name="titulo_reuniones_hechas">REUNIONES REALIZADAS</string>
+    <string name="reunion_1">REUNION REALIZADA EL 24-MAYO-2020 </string>
+    <string name="reunion_2">REUNION REALIZADA EL 30-MAYO-2020 </string>
+    <string name="titulo_modificaciones">OBSERVACIONES HECHAS EN CAMPO</string>
+    <string name="EditText">INGRESE OBSERVACIÓN</string>
+    <string name="registrar_reunion">REGISTRAR REUNION</string>
+    <string name="nombre_plano">CEN-CMA-REF-XXX</string>
+    <string name="botonobs">REGISTRAR OBSERVACIÓN</string>
+    <string name="botonreun">REGISTRAR REUNION</string>
+    // FIN PDF INICIAL
+
+    //STRING REGISTRAR REUNION
+    <string name="titulo_registrar_reunion">REGISTRAR REUNION</string>
+    <string name="titulo_mostrar_reunion">REUNION REGISTRADA</string>
+    <string name="titulo_reunion">PLANOS RELACIONADOS</string>
+    <string name="plano_1">INGRESE CODIGO</string>
+    <string name="plano_2">CEN-CMA-REF-295</string>
+    <string name="list_view">OBSERVACIONES</string>
+    <string name="titulo_asistentes">INGRESAR ASISTENTES</string>
+    <string name="titulo_asistentes_1">ASISTENTES DE LA REUNION</string>
+    <string name="titulo_info_reunion">INFORMACIÓN REUNIÓN</string>
+    <string name="titulo_temas">INGRESAR OBSERVACIÓN</string>
+    <string name="titulo_temas_1">OBSERVACIÓNES INGRESADAS</string>
+    <string name="resumen_reunion">INGRESE RESUMEN</string>
+    <string name="fecha_reunion">FECHA DE LA REUNION</string>
+    <string name="lugar_reunion">LUGAR DE LA REUNION</string>
+    <string name="hora_reunion">HORA DE LA REUNION</string>
+    <string name="registrar">REEGISTRAR REUNION</string>
+    <string name="fecha">XXX</string>
+    <string name="titulo_fecha">FECHA DE APROBACIÓN</string>
+    <string name="usuario">XXX</string>
+    <string name="titulo_usuario">USUARIO</string>
+    <string name="asistente_1">INGRESAR ASISTENTE</string>
+
+    // STRING PARA MOSTRAR REUNION
+
+    <string name="tv_plano_1"> </string>
+    <string name="titulo_info_reunion_fecha">LUGAR DE LA REUNIÓN:  </string>
+    <string name="titulo_info_reunion_hora">HORA DE LA REUNIÓN:  </string>
+    <string name="text_tema_principal">TEMA PRINCIPAL:  </string>
+    <string name="planeando_reunion">PLANEAR REUINÓN  </string>
+
+
+
+    // STRING PARA MOSTRAR OBSERVACIONES
+
+    <string name="foto_1">FOTOGRAFIA 1</string>
+    <string name="foto_2">FOTOGRAFIA 2</string>
+    <string name="foto_3">FOTOGRAFIA 3</string>
+    <string name="foto_4">FOTOGRAFIA 4</string>
+    <string name="foto_5">FOTOGRAFIA 5</string>
+    <string name="foto_6">FOTOGRAFIA 6</string>
+    <string name="titulo_mostrar_observacion">OBSERVACIONES</string>
+    <string name="button">TOMAR FOTOGRAFIA</string>
+    <string name="button2">IR A GALERÍA</string>
+    <string name="tema_reunion">INGRESE TEMA DE LA REUNION</string>
+    <string name="text_fecha_plan">INGRESE FECHA</string>
+    <string name="text_lugar_plan">INGRESE LUGAR</string>
+    <string name="text_hora_plan">INGRESE HORA</string>
+    <string name="text_area_plan">AREA</string>
+    <string name="textview3">INFORMACIÓN GENERAL</string>
+    <string name="text_seleccione_usuarios">SELECCIONE USUARIOS</string>
+    <string name="codigo_sap">CODIGO SAP</string>
+    <string name="material">MATERIAL</string>
+    <string name="cantidad1">CANTIDAD</string>
+    <string name="unidad">UNIDAD</string>
+    <string name="inventario_actual">INVENTARIO ACTUAL</string>
+    <string name="radioButton_fecha">BUSCAR POR FECHA</string>
+    <string name="radioButton_tema">BUSCAR POR TEMA</string>
+    <string name="listado">LISTADO MAESTRO DE PLANOS</string>
+    <string name="invent">INVENTARÍO ACTUALIZADO</string>
+    <string name="title_activity_main_principal">Main_principal</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+    <string name="home_second">Home Second</string>
+    <string name="password">PASSWORD</string>
+    <string name="login">INGRESAR</string>
+    <string name="textView6">Aun no tienes cuenta? registrate aqui!!!</string>
+    <string name="Reg_name">NOMBRES Y APELLIDOS</string>
+    <string name="Reg_email">EMAIL</string>
+    <string name="Reg_password">AREA</string>
+    <string name="registrar_usuario">REGISTRARME</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+</resources>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "801369139957",
+    "firebase_url": "https://ingenieria-ccc.firebaseio.com",
+    "project_id": "ingenieria-ccc",
+    "storage_bucket": "ingenieria-ccc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:801369139957:android:e9a39e49447baecaed33bc",
+        "android_client_info": {
+          "package_name": "com.example.excelandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "801369139957-opjpr2mpcb6nn3rs1dvihsb988c0uv9f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.excelandroid",
+            "certificate_hash": "b9abcbafc6ae43832ad060d920c42e5d28e1ddfd"
+          }
+        },
+        {
+          "client_id": "801369139957-f8m0qajhfb8rsektd53cqcer9dovcdge.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVhnQRp-8QN9QEW2Z-GuAUfQEP171_AM8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "801369139957-f8m0qajhfb8rsektd53cqcer9dovcdge.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
