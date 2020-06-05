@@ -37,12 +37,14 @@ public class Notificaciones extends AppCompatActivity {
     JsonRequest jrq;
     RequestQueue requestQueue;
     String camilo1="";
-    String ip="192.168.101.185";
+   // String ip="192.168.102.61";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notificaciones);
+
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
         enviarnotificacion = findViewById(R.id.button5);
         enaviartodos=findViewById(R.id.enviar);

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,13 +19,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -36,7 +33,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -55,7 +51,7 @@ public class Vista_pdf extends AppCompatActivity  {
     JsonRequest jrq;
     RequestQueue requestQueue;
     String camilo1="",camilo2="";
-    String ip="192.168.101.185";
+   // String ip="192.168.102.61";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +72,7 @@ public class Vista_pdf extends AppCompatActivity  {
         registrar_obs = findViewById(R.id.boton_obs);
         reunion = findViewById(R.id.boton_reun);
         resumenreunion = findViewById(R.id.resumen_reunion);
-        titulo_registrar_reunion=findViewById(R.id.inventario_actual);
+        titulo_registrar_reunion=findViewById(R.id.archivo_planos);
         fecha1=findViewById(R.id.text_cantidad);
         rq= Volley.newRequestQueue(this);
 
@@ -84,10 +80,9 @@ public class Vista_pdf extends AppCompatActivity  {
         final String recuperar = Objects.requireNonNull(getIntent().getExtras()).getString("dato");
         final String fecha = getIntent().getExtras().getString("pos");
         final String numero_plano = getIntent().getExtras().getString("pos1");
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
-
-
-        // primero  buscamos las observaciones que se hayan registrado e el plano actual
+         // primero  buscamos las observaciones que se hayan registrado e el plano actual
 
         buscarobservaciones("http://"+ip+"/login/buscar_observaciones.php?codigo="+recuperar+"");
 
@@ -119,6 +114,7 @@ public class Vista_pdf extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Vista_pdf.this, Registrar_reunion.class);
+                intent.putExtra("ipwifi",ip);
                 // intent.putExtra("dato", recuperar);
                 startActivity(intent);
             }
@@ -137,7 +133,7 @@ public class Vista_pdf extends AppCompatActivity  {
                 String subextraer1 = extraer1.substring(0,4);
               //  Toast.makeText(Vista_pdf.this, subextraer1, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Vista_pdf.this, Mostrar_observaciones.class);
-
+                intent.putExtra("ipwifi",ip);
                 intent.putExtra("identificador2",subextraer1);
                 intent.putExtra("plano1",recuperar);
                 startActivity(intent);
@@ -154,6 +150,7 @@ public class Vista_pdf extends AppCompatActivity  {
                 String subextraer1 = extraer1.substring(0,4);
                // Toast.makeText(Vista_pdf.this, subextraer1, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(Vista_pdf.this, Mostrar_reuniones.class);
+                intent.putExtra("ipwifi",ip);
                 intent.putExtra("identificador1",subextraer1);
                 intent.putExtra("plano1",recuperar);
                 startActivity(intent);
@@ -236,7 +233,7 @@ public class Vista_pdf extends AppCompatActivity  {
     // metodo para registrar observaciones
 
     private void registrarobservaciones(String URL) {
-
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
 
         if (resumenreunion.getText().toString().isEmpty()) {

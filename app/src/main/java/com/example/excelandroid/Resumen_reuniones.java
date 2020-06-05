@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -48,19 +49,23 @@ public class Resumen_reuniones extends AppCompatActivity {
     JsonRequest jrq;
     RequestQueue requestQueue;
     String camilo1="",camilo2="";
-    String ip="192.168.101.185";
-
-
+   // String ip="192.168.102.61";
+    Button botonplan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resumen_reuniones);
 
+        final String ip = getIntent().getExtras().getString("ipwifi");
+
        // Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
 
         getSupportActionBar().setTitle("RESUMEN DE REUNIONES");
         getSupportActionBar().setCustomView(R.layout.texta);
+
+        botonplan=(Button)findViewById(R.id.boton_plan);
+
 
         action_search=findViewById(R.id.action_search);
 
@@ -74,18 +79,24 @@ public class Resumen_reuniones extends AppCompatActivity {
 
         rq= Volley.newRequestQueue(this);
 
-
         recycler_Resumen = findViewById(R.id.Recycler_resumen);
-
         recycler_Resumen.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler_Resumen.setLayoutManager(linearLayoutManager);
-
 
         listdatos = new ArrayList<>();
 
         resumenreuniones("http://"+ip+"/login/buscar_resumen_reuniones.php");
 
+        botonplan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent=new Intent(Resumen_reuniones.this,Planear_reunion.class);
+                intent.putExtra("ipwifi",ip);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -100,7 +111,6 @@ public class Resumen_reuniones extends AppCompatActivity {
             }
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 adapter.getFilter().filter(newText);
                 return false;
             }
@@ -109,6 +119,7 @@ public class Resumen_reuniones extends AppCompatActivity {
     }
 
     private void resumenreuniones (String URL){
+        final String ip = getIntent().getExtras().getString("ipwifi");
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -117,7 +128,6 @@ public class Resumen_reuniones extends AppCompatActivity {
                 for (int i = 0; i < response.length(); i++) {
                     try {
                         jsonObject = response.getJSONObject(i);
-
                         listdatos.add(new blog2((jsonObject.getString("resumen")),(jsonObject.getString("fecha")),(jsonObject.getString("lugar")),(jsonObject.getString("identificador"))));
                         adapter = new Adapter_reunion(Resumen_reuniones.this, listdatos);
                         recycler_Resumen.setAdapter(adapter);
@@ -126,14 +136,12 @@ public class Resumen_reuniones extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-
                 adapter.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         String identificador=listdatos.get(recycler_Resumen.getChildAdapterPosition(v)).getId();
-
                         Intent intent=new Intent(Resumen_reuniones.this,Mostrar_reuniones.class);
+                        intent.putExtra("ipwifi",ip);
                         intent.putExtra("identificador1",identificador);
                         startActivity(intent);
                     }
@@ -150,11 +158,8 @@ public class Resumen_reuniones extends AppCompatActivity {
         requestQueue.add(jsonArrayRequest);
     }
 
-
     public  class  blog2 {
-
         public String tema,fecha,lugar,id;
-
         public blog2(String tema, String fecha, String lugar,String id) {
             this.tema = tema;
             this.fecha = fecha;

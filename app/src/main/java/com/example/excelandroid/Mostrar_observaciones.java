@@ -77,12 +77,14 @@ public class Mostrar_observaciones extends AppCompatActivity {
     RequestQueue rq;
     JsonRequest jrq;
     RequestQueue requestQueue;
-    String ip="192.168.101.185";
+   // String ip="192.168.102.61";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_observaciones);
+
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
         // cambiar color a barra inferior del cel
         this.window=getWindow();
@@ -126,27 +128,6 @@ public class Mostrar_observaciones extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         // empieza codigo para llamar la camara y abrir la galeria *********************************************************************************
 
        galeria.setOnClickListener(new View.OnClickListener() {
@@ -172,7 +153,7 @@ public class Mostrar_observaciones extends AppCompatActivity {
     // metodo para registrar observaciones
 
     private void registrarobservaciones(String URL) {
-
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
         final int id100 = (int) (Math.random() * 1000000 + 1000);
         final String id10 = String.valueOf(id100);

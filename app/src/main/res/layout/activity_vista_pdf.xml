@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.029"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/inventario_actual">
+            app:layout_constraintTop_toBottomOf="@+id/archivo_planos">
 
         </com.github.barteksc.pdfviewer.PDFView>
 
@@ -201,7 +201,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/inventario_actual"
+            android:id="@+id/archivo_planos"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#009688"
@@ -237,7 +237,7 @@
             android:textColor="#C1C0C0"
             android:textColorHint="#C1C0C0"
             app:layout_constraintStart_toEndOf="@+id/pdfView1"
-            app:layout_constraintTop_toBottomOf="@+id/inventario_actual" />
+            app:layout_constraintTop_toBottomOf="@+id/archivo_planos" />
 
         <TextView
             android:id="@+id/titulo_usuario"

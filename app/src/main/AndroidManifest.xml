@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
         android:name="android.hardware.camera2"
@@ -20,15 +22,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-
         tools:ignore="GoogleAppIndexingWarning">
-
-
+        <activity android:name=".CMA"></activity>
+        <activity
+            android:name=".Menu_planos"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".Plano_Nuevo" />
         <activity
             android:name=".Registrar_usuario"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activity_login"
             android:theme="@style/AppTheme.NoActionBar">
@@ -41,23 +43,17 @@
         <activity
             android:name=".Main_principal"
             android:label="@string/title_activity_main_principal"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Notificaciones" />
         <activity android:name=".Main_inventario" />
         <activity android:name=".Resumen_reuniones" />
-
         <activity
             android:name=".Planear_reunion"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-
-        <activity android:name=".MainActivity"
-            />
-
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".Mostrar_observaciones"
-           />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".Mostrar_reuniones"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

@@ -43,11 +43,13 @@ public class Registrar_reunion extends AppCompatActivity {
     RequestQueue rq;
     JsonRequest jrq;
     RequestQueue requestQueue;
-    String ip="192.168.101.185";
+   // String ip="192.168.102.61";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_reunion);
+
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
        // int aleatorio= (int) Math.floor(Math.random()*(10-2)+2);
 

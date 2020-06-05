@@ -43,22 +43,19 @@ public class Registrar_usuario extends AppCompatActivity implements Response.Lis
 
     Button registrar1;
     Window window;
-
     EditText email,name1,password,password_repeat;
-
     RequestQueue rq;
     JsonRequest jrq;
-
-
     RequestQueue requestQueue;
     String camilo1="",camilo2="";
-    String ip="192.168.101.185";
-
+   // String ip="192.168.102.61";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar_usuario);
+
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
         // cambiar color a barra inferior del cel
         this.window=getWindow();
@@ -76,13 +73,9 @@ public class Registrar_usuario extends AppCompatActivity implements Response.Lis
         password=findViewById(R.id.reg_password);
         password_repeat=findViewById(R.id.reg_repeat_password);
 
-
-
         registrar1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
 
                 if(password.getText().toString().isEmpty()|password_repeat.getText().toString().isEmpty()|name1.getText().toString().isEmpty()|email.getText().toString().isEmpty()){
                     Toast.makeText(Registrar_usuario.this, "Debe llenar todos los datos", Toast.LENGTH_SHORT).show();
@@ -91,18 +84,14 @@ public class Registrar_usuario extends AppCompatActivity implements Response.Lis
 
                 String emailinput=email.getText().toString();
 
-
                 if (!emailinput.isEmpty()&& Patterns.EMAIL_ADDRESS.matcher(emailinput).matches()){
 
-
                     registrarusuario("http://"+ip+"/login/registrar_usuarios.php");
-
 
                 } else {
                     Toast.makeText(getApplication(), "El email es invalido", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
 
             }
         });

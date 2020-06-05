@@ -9,10 +9,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,10 +38,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.UnknownHostException;
+import java.nio.ByteOrder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Formatter;
 import java.util.List;
+import java.util.Locale;
 
 import model.Inbox;
 
@@ -62,7 +75,7 @@ public class Planear_reunion extends AppCompatActivity {
     JsonRequest jrq;
     RequestQueue requestQueue;
     String camilo1="",camilo2="";
-    String ip="192.168.101.185";
+  //  String ip="192.168.102.61";
 
 
     @SuppressLint("SetTextI18n")
@@ -70,6 +83,11 @@ public class Planear_reunion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_planear_reunion);
+
+        final String ip = getIntent().getExtras().getString("ipwifi");
+
+       // getIP();
+
         fecha_plan = findViewById(R.id.text_fecha_plan);
         mcurrentDate = Calendar.getInstance();
         dia = mcurrentDate.get(Calendar.MONTH);
@@ -116,6 +134,7 @@ public class Planear_reunion extends AppCompatActivity {
         insertarusuario("http://"+ip+"/login/buscar_usuarios.php");
         initComponent();
       //  Toast.makeText(this, "Selecciones los participantes de la reunion", Toast.LENGTH_SHORT).show();
+
 
 
     }
@@ -235,21 +254,54 @@ public class Planear_reunion extends AppCompatActivity {
     private void deleteInboxes() {
         String camilo[];
 
-        List<Integer> selectedItemPositions = mAdapter.getSelectedItems();
 
-        camilo=new String[selectedItemPositions.size()];
+        if (mAdapter.getSelectedItems().size() != 0) {
 
-        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+            List<Integer> selectedItemPositions = mAdapter.getSelectedItems();
 
-            camilo[i]=(mAdapter.getItem(selectedItemPositions.get(i)).from);
-            // mAdapter.removeData(selectedItemPositions.get(i));
+            camilo = new String[selectedItemPositions.size()];
+
+            for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
+
+                camilo[i] = (mAdapter.getItem(selectedItemPositions.get(i)).from);
+                // mAdapter.removeData(selectedItemPositions.get(i));
+            }
+            Toast.makeText(this, Arrays.toString(camilo), Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(this, "Debe ingresar almenos un praticipante", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        Toast.makeText(this, Arrays.toString(camilo), Toast.LENGTH_SHORT).show();
+    }
+
+
+        public String getIP(){
+            List<InetAddress> addrs;
+            String address = "";
+            try{
+                List<NetworkInterface> interfaces = Collections.list(NetworkInterface.getNetworkInterfaces());
+                for(NetworkInterface intf : interfaces){
+                    addrs = Collections.list(intf.getInetAddresses());
+                    for(InetAddress addr : addrs){
+                        if(!addr.isLoopbackAddress() && addr instanceof Inet4Address){
+                            address = addr.getHostAddress().toUpperCase(new Locale("es", "MX"));
+                            Toast.makeText(this, address, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+            }catch (Exception e){
+                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+            return address;
+        }
+
+
+
 
 
        // mAdapter.notifyDataSetChanged();
-    }
+
 // *******************************************************************
 
 

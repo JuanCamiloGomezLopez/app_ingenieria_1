@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.excelandroid.MainActivity;
 import com.example.excelandroid.Main_inventario;
+import com.example.excelandroid.Menu_planos;
 import com.example.excelandroid.Notificaciones;
 import com.example.excelandroid.Planear_reunion;
 import com.example.excelandroid.R;
@@ -24,7 +25,7 @@ import com.example.excelandroid.Resumen_reuniones;
 
 public class HomeFragment extends Fragment {
 
-
+    String ip="192.168.102.61";
 
      private TextView bienvenido;
      String d;
@@ -34,10 +35,6 @@ public class HomeFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
-
-
-
-
 
 
         return root;
@@ -60,7 +57,7 @@ public class HomeFragment extends Fragment {
         }
 
         ImageView lista_planos=(ImageView)view.findViewById(R.id.imageView11);
-        ImageView planear_reunion=(ImageView)view.findViewById(R.id.imageView8);
+        ImageView sinfuncion=(ImageView)view.findViewById(R.id.imageView8);
         ImageView resumen_reunion=(ImageView)view.findViewById(R.id.imageView5);
         ImageView mostrar_inventario=(ImageView)view.findViewById(R.id.imageView7);
         ImageView notificaciones=(ImageView)view.findViewById(R.id.imageView3);
@@ -70,25 +67,19 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Intent intent= new Intent(getContext(),MainActivity.class);
+                Intent intent= new Intent(getContext(),Menu_planos.class);
+                intent.putExtra("ipwifi",ip);
                 startActivity(intent);
             }
         });
 
-       planear_reunion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent= new Intent(getContext(), Planear_reunion.class);
-                startActivity(intent);
-            }
-        });
 
         resumen_reunion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 Intent intent= new Intent(getContext(), Resumen_reuniones.class);
+                intent.putExtra("ipwifi",ip);
                 startActivity(intent);
             }
         });
@@ -98,17 +89,11 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent= new Intent(getContext(), Main_inventario.class);
+                intent.putExtra("ipwifi",ip);
                 startActivity(intent);
             }
         });
 
-        notificaciones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent= new Intent(getContext(), Notificaciones.class);
-                startActivity(intent);
-            }
-        });
     }
 }

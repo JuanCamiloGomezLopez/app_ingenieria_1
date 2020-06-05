@@ -1,4 +1,5 @@
 package com.example.excelandroid;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -34,15 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
-import jxl.Cell;
-import jxl.Sheet;
-import jxl.Workbook;
-
- 
-public class MainActivity extends AppCompatActivity {
+public class CMA extends AppCompatActivity {
 
     ArrayList<blog> listdatos;
     RecyclerView recycler;
@@ -50,71 +43,19 @@ public class MainActivity extends AppCompatActivity {
     RequestQueue rq;
     JsonRequest jrq;
     RequestQueue requestQueue;
+    Window window;
 
-    Button nuevoplano;
-
-    private Window window;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         final String ip = getIntent().getExtras().getString("ipwifi");
+        final String carpeta_click = getIntent().getExtras().getString("frente");
+
+        Toast.makeText(this, carpeta_click, Toast.LENGTH_SHORT).show();
 
         rq= Volley.newRequestQueue(this);
-
-        nuevoplano=(Button) findViewById(R.id.boton_insertar_plano);
-
-        nuevoplano.setOnClickListener(new View.OnClickListener() {
-
-
-            @Override
-            public void onClick(View v) {
-
-                String current_usuario="camilo1";
-                String usuario1="camilo";
-                String usuario2 ="german";
-
-                AlertDialog.Builder mydialog = new AlertDialog.Builder(MainActivity.this);
-                mydialog.setTitle("Utsed no esta autorizado para realizar esta accion");
-
-               mydialog.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.cancel();
-
-                    }
-                });
-
-                mydialog.show();
-
-                    AlertDialog.Builder mydialog1 = new AlertDialog.Builder(MainActivity.this);
-                    mydialog1.setTitle("Bienvenido " + current_usuario + " \nIngrese su Contraseña");
-
-                    final EditText contraseña1 = new EditText(MainActivity.this);
-                    contraseña1.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mydialog1.setView(contraseña1);
-
-                    mydialog1.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String pass = contraseña1.getText().toString();
-
-                            Toast.makeText(MainActivity.this, "la contraseña es" + pass, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    mydialog1.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.cancel();
-                        }
-                    });
-
-                    mydialog1.show();
-            }
-        });
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.text);
@@ -137,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recycler.setLayoutManager(linearLayoutManager);
 
-        buscarobservaciones("http://"+ip+"/login/planos/planos_cma.php?frente=cma");
+        buscarobservaciones("http://"+ip+"/login/planos/planos_cma.php?frente="+carpeta_click+"");
 
-    } // oncreate
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -180,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
                                 ,(jsonObject.getString("fecha")),(jsonObject.getString("dibujante")),R.drawable.cencmaref235
                                 ,(jsonObject.getString("codigo")),(jsonObject.getString("id")),(jsonObject.getString("frente"))));
 
-                        adapter = new Adapter(MainActivity.this, listdatos);
+                        adapter = new Adapter(CMA.this, listdatos);
                         recycler.setAdapter(adapter);
 
 
@@ -193,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
                                 String plano_min=listdatos.get(recycler.getChildAdapterPosition(v)).getPdf();
                                 String fecha=listdatos.get(recycler.getChildAdapterPosition(v)).getFecha();
 
-                                Intent intent=new Intent(MainActivity.this,Vista_pdf.class);
+                                Intent intent=new Intent(CMA.this,Vista_pdf.class);
                                 intent.putExtra("dato",archivo);
                                 intent.putExtra("pos",fecha);
                                 intent.putExtra("pos1",no_plano);
@@ -214,11 +155,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-                 Toast.makeText(getApplicationContext(), "error de conexion observaciones", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "error de conexion observaciones", Toast.LENGTH_SHORT).show();
             }
         });
         requestQueue=Volley.newRequestQueue(this);
         requestQueue.add(jsonArrayRequest);
     }
-
-}// principal
+}

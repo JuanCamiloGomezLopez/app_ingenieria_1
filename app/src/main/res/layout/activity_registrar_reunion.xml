@@ -22,7 +22,7 @@
 
 
             <TextView
-                android:id="@+id/inventario_actual"
+                android:id="@+id/archivo_planos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="#009688"
@@ -47,7 +47,7 @@
                 app:cardCornerRadius="15dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/inventario_actual">
+                app:layout_constraintTop_toBottomOf="@+id/archivo_planos">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/ggg"

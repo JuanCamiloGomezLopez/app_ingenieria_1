@@ -18,12 +18,12 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>implements Filterable, View.OnClickListener {
 
-    ArrayList<MainActivity.blog> listdatos;
-    ArrayList<MainActivity.blog> listdatos5;
+    ArrayList<blog> listdatos;
+    ArrayList<blog> listdatos5;
     private View.OnClickListener listener;
     Context context;
 
-    public Adapter(Context c, ArrayList<MainActivity.blog> listdatos) {
+    public Adapter(Context c, ArrayList<blog> listdatos) {
         context=c;
         this.listdatos = listdatos;
         this.listdatos5=new ArrayList<>(listdatos);
@@ -46,7 +46,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>implements 
     holder.fecha.setText(listdatos.get(position).getFecha());
     holder.dibujo.setText(listdatos.get(position).getDibujo());
     holder.foto.setImageResource(listdatos.get(position).getFoto());
-    MainActivity.blog posit = listdatos.get(position);
+    blog posit = listdatos.get(position);
     }
 
     @Override
@@ -73,7 +73,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>implements 
     private Filter exampleFilter = new Filter() {
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
-            ArrayList<MainActivity.blog> filteredList = new ArrayList<>();
+            ArrayList<blog> filteredList = new ArrayList<>();
 
             if (constraint == null || constraint.length() == 0) {
 
@@ -82,7 +82,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>implements 
 
                 String filterPattern = constraint.toString().toLowerCase().trim();
 
-                for (MainActivity.blog item : listdatos5) {
+                for (blog item : listdatos5) {
 
 
 

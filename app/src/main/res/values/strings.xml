@@ -50,9 +50,9 @@
     <string name="titulo_info_reunion_fecha">LUGAR DE LA REUNIÓN:  </string>
     <string name="titulo_info_reunion_hora">HORA DE LA REUNIÓN:  </string>
     <string name="text_tema_principal">TEMA PRINCIPAL:  </string>
-    <string name="planeando_reunion">PLANEAR REUINÓN  </string>
-
-
+    <string name="planeando_reunion">PROGRAMAR REUINÓN  </string>
+    <string name="boton_planeadas">REUNIONES PROGRAMADAS  </string>
+    <string name="boton_insertar_plano">REGISTRAR NUEVO PLANO </string>
 
     // STRING PARA MOSTRAR OBSERVACIONES
 
@@ -105,6 +105,24 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="text_cma">CEN-CMA</string>
+    <string name="text_ctr">CEN-CTR</string>
+    <string name="text_alm">CEN-ALM</string>
+    <string name="text_tdc">CEN-TDC</string>
+    <string name="text_gen">CEN-GEN</string>
+    <string name="text_gen_gen">GEN-GEN</string>
+    <string name="text_pcb">CEN-PCB</string>
+    <string name="text_tac">CEN-TAC</string>
+    <string name="text_tas">CEN-TAS</string>
+    <string name="text_tcn">CEN-TCN</string>
+    <string name="text_palm">CEN-PALM</string>
+
+    <string name="text_card_1">CEN-XXX</string>
+    <string name="text_card_2">CEN-XXX</string>
+    <string name="text_card_3">CEN-XXX</string>
+
+    <string name="archivo_planos">ARCHIVO DE PLANOS</string>
 
 
 </resources>

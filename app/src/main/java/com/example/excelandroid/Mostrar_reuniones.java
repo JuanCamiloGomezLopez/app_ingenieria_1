@@ -31,11 +31,13 @@ public class Mostrar_reuniones extends AppCompatActivity {
     JsonRequest jrq;
     RequestQueue requestQueue;
     String camilo1="";
-    String ip="192.168.101.185";
+   // String ip="192.168.102.61";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_reuniones);
+
+        final String ip = getIntent().getExtras().getString("ipwifi");
 
         // cambiar color a barra inferior del cel
         this.window = getWindow();
