@@ -123,6 +123,28 @@
     <string name="text_card_3">CEN-XXX</string>
 
     <string name="archivo_planos">ARCHIVO DE PLANOS</string>
+    <string name="textView7">INFORMACIÓN DEL USUARIO</string>
+    <string name="text_titulo_usuario">usuario</string>
+    <string name="text_titulo_codigo">codigo</string>
+    <string name="text_titulo_cargo">cargo</string>
+    <string name="scanear_colaborador">SCANEAR COLABORADOR</string>
+    <string name="ingresar_herramienta">INGRESAR HERRAMIENTA</string>
+    <string name="eliminar_herramienta">ELIMINAR HERRAMIENTA</string>
+    <string name="titulo_herrmienta_usuario">HERRAMIENTAS EN PODER DEL COLABORADOR</string>
+    <string name="titulo_herrmientas">Descripccion herramienta</string>
+    <string name="titulo_fecha_retiro">Fecha de retiro</string>
+
+
+    <string name="ingresando_plano">INGRESANDO PLANO</string>
+    <string name="codigo_plano">CODIGO</string>
+    <string name="revision_plano">REV</string>
+    <string name="nombre_plano1">TITULO PLANO</string>
+    <string name="dibujante_plano">DIBUJANTE</string>
+    <string name="boton_registrar_plano">REGISTRAR PLANO</string>
+
+
+
+
 
 
 </resources>

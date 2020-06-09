@@ -53,8 +53,6 @@ public class CMA extends AppCompatActivity {
         final String ip = getIntent().getExtras().getString("ipwifi");
         final String carpeta_click = getIntent().getExtras().getString("frente");
 
-        Toast.makeText(this, carpeta_click, Toast.LENGTH_SHORT).show();
-
         rq= Volley.newRequestQueue(this);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
@@ -105,7 +103,6 @@ public class CMA extends AppCompatActivity {
 
 
     private void buscarobservaciones (String URL){
-
         final String ip = getIntent().getExtras().getString("ipwifi");
 
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
@@ -123,8 +120,6 @@ public class CMA extends AppCompatActivity {
 
                         adapter = new Adapter(CMA.this, listdatos);
                         recycler.setAdapter(adapter);
-
-
 
                         adapter.setOnClickListener(new View.OnClickListener() {
                             @Override

@@ -1,6 +1,7 @@
 package com.example.excelandroid;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -36,7 +37,8 @@ public class Main_principal extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
+       // final String usuario_name = getIntent().getExtras().getString("nombre");
+       // final String usuario_email = getIntent().getExtras().getString("email");
 
         // cambiar color a barra inferior del cel
         this.window=getWindow();
@@ -46,31 +48,15 @@ public class Main_principal extends AppCompatActivity {
         window.setStatusBarColor(Color.parseColor(primary));
         // rtermina cambiar color
 
-
-
-
-
         setContentView(R.layout.activity_main_principal);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
         navigationView.setBackgroundColor(getResources().getColor(R.color.tittle_color));
         navigationView.setItemIconTintList(null);
-
-        String usuario = getIntent().getStringExtra("nombre");
-
-
-
-
-
-
-
-
-
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.

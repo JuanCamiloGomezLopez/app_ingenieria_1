@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
+    style="@style/AppTheme.NoActionBar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -11,8 +12,7 @@
     <include
         layout="@layout/app_bar_main_principal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
@@ -20,8 +20,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
-        app:itemTextColor="#FFFFFF"
         app:headerLayout="@layout/nav_header_main_principal"
+        app:itemTextColor="#FFFFFF"
         app:menu="@menu/activity_main_principal_drawer" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

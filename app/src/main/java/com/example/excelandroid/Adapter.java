@@ -104,24 +104,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>implements 
         }
     };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView cantidad,descripccion,fecha,dibujo;
         ImageView foto;
@@ -134,7 +116,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>implements 
             dibujo=(TextView) itemView.findViewById(R.id.text_unidad);
             foto= (ImageView)itemView.findViewById(R.id.imageView);
         }
-
 
     }
 }

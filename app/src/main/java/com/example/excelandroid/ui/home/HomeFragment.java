@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.example.excelandroid.Codigo_barras;
 import com.example.excelandroid.MainActivity;
 import com.example.excelandroid.Main_inventario;
 import com.example.excelandroid.Menu_planos;
@@ -25,43 +26,36 @@ import com.example.excelandroid.Resumen_reuniones;
 
 public class HomeFragment extends Fragment {
 
-    String ip="192.168.102.61";
+    String ip="192.168.103.29";
 
      private TextView bienvenido;
      String d;
 
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
 
-
         return root;
-
     }
 
     @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
         bienvenido=view.findViewById(R.id.textView4);
 
-        if (getArguments() != null) {
-            String d= getArguments().getString("nombre","sadfasdf");
-            Toast.makeText(getContext(), d, Toast.LENGTH_SHORT).show();
 
+        if (getArguments() != null) {
+            String d= getArguments().getString("message","sadfasdf");
+            Toast.makeText(getContext(), d, Toast.LENGTH_SHORT).show();
         }
 
         ImageView lista_planos=(ImageView)view.findViewById(R.id.imageView11);
-        ImageView sinfuncion=(ImageView)view.findViewById(R.id.imageView8);
+        ImageView codigo_barras=(ImageView)view.findViewById(R.id.imageView8);
         ImageView resumen_reunion=(ImageView)view.findViewById(R.id.imageView5);
         ImageView mostrar_inventario=(ImageView)view.findViewById(R.id.imageView7);
-        ImageView notificaciones=(ImageView)view.findViewById(R.id.imageView3);
-
+        ImageView notificaciones=(ImageView)view.findViewById(R.id.imageView9);
 
         lista_planos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,6 +83,27 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
 
                 Intent intent= new Intent(getContext(), Main_inventario.class);
+                intent.putExtra("ipwifi",ip);
+                startActivity(intent);
+            }
+        });
+
+
+        codigo_barras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent= new Intent(getContext(), Codigo_barras.class);
+                intent.putExtra("ipwifi",ip);
+                startActivity(intent);
+            }
+        });
+
+        notificaciones.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent= new Intent(getContext(), Notificaciones.class);
                 intent.putExtra("ipwifi",ip);
                 startActivity(intent);
             }
