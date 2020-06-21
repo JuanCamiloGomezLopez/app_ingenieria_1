@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,17 +8,50 @@
     android:background="#000000"
     tools:context=".Registrar_usuario">
 
+    <EditText
+        android:id="@+id/area"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="24dp"
+        android:autofillHints=""
+        android:background="#78504F4F"
+        android:ems="10"
+        android:hint="@string/Reg_password"
+        android:inputType="textPersonName"
+        android:padding="10sp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#8C8B8B"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/reg_password" />
+
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="197dp"
-        android:layout_height="164dp"
-        android:layout_marginTop="64dp"
+        android:layout_width="223dp"
+        android:layout_height="221dp"
+        android:layout_marginTop="30dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/foto_perfil" />
+        app:srcCompat="@drawable/photo_female_3" />
 
+
+    <Button
+        android:id="@+id/seleccion_imagen"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:layout_width="220dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/boton_tipico"
+        android:text="@string/seleccion_imagen"
+        android:textColor="#009688"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <EditText
         android:id="@+id/reg_email"
@@ -65,35 +99,13 @@
         app:layout_constraintTop_toBottomOf="@+id/reg_email" />
 
     <EditText
-        android:id="@+id/reg_repeat_password"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="15dp"
-
-        android:layout_marginEnd="24dp"
-        android:background="#78504F4F"
-        android:hint="@string/Reg_password"
-        android:imeOptions="actionDone"
-        android:importantForAutofill="no"
-        android:inputType="textPassword"
-        android:padding="10dp"
-        android:selectAllOnFocus="true"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#8C8B8B"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_password" />
-
-    <EditText
         android:id="@+id/reg_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="24dp"
+        android:autofillHints=""
         android:background="#78504F4F"
         android:ems="10"
         android:hint="@string/Reg_name"
@@ -104,8 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
-        android:autofillHints="" />
+        app:layout_constraintTop_toBottomOf="@+id/seleccion_imagen" />
 
     <Button
         android:id="@+id/registrar_usuario"
@@ -113,16 +124,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="48dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="72dp"
         android:layout_marginEnd="48dp"
         android:background="#009688"
         android:text="@string/registrar_usuario"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.515"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/reg_repeat_password" />
+        app:layout_constraintTop_toBottomOf="@+id/area" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

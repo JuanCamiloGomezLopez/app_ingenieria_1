@@ -142,6 +142,7 @@ public class Planear_reunion extends AppCompatActivity {
 
 
     private void insertarusuario (String URL){
+        final String ip = getIntent().getExtras().getString("ipwifi");
         JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(URL, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -152,7 +153,7 @@ public class Planear_reunion extends AppCompatActivity {
                         jsonObject = response.getJSONObject(i);
 
 
-                        items.add(new Inbox(1,jsonObject.getString("imagen"),jsonObject.getString("name"),jsonObject.getString("user"),jsonObject.getString("area"),"area", R.color.red_500));
+                        items.add(new Inbox(1,"http://"+ip+"/"+jsonObject.getString("imagen"),jsonObject.getString("name"),jsonObject.getString("user"),jsonObject.getString("area"),"area", R.color.red_500));
                         mAdapter = new AdapterListInbox(Planear_reunion.this, items);
                         recyclerView.setAdapter(mAdapter);
 

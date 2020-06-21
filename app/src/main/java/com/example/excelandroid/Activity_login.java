@@ -42,7 +42,7 @@ public class Activity_login extends AppCompatActivity implements Response.Listen
     JsonRequest jrq;
     private ProgressBar barraprogreso;
     private ProgressDialog progressDialog;
-    String ip="192.168.103.29";
+    String ip="192.168.1.56";
     String nombre, email_usuario;
 
 
@@ -77,14 +77,14 @@ public class Activity_login extends AppCompatActivity implements Response.Listen
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(Activity_login.this, Main_principal.class);
-                startActivity(intent);
+               // Intent intent = new Intent(Activity_login.this, Main_principal.class);
+               // startActivity(intent);
 
                 if(email.getText().toString().equals("") | password.getText().toString().equals("")){
                     Toast.makeText(Activity_login.this, "Debe ingresar usuario y contraseña", Toast.LENGTH_SHORT).show();
                 } else {
 
-                   // iniciarseccion();
+                    iniciarseccion();
                 }
 
             }
@@ -94,6 +94,7 @@ public class Activity_login extends AppCompatActivity implements Response.Listen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Activity_login.this,Registrar_usuario.class);
+                intent.putExtra("ipwifi",ip);
                 startActivity(intent);
             }
         });

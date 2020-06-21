@@ -51,6 +51,8 @@ public class Menu_planos extends AppCompatActivity {
         final String user= sharedPreferences.getString("user","No existe la información");
         String email= sharedPreferences.getString("email","No existe la información");
 
+
+
         //Toast.makeText(this, user+email, Toast.LENGTH_SHORT).show();
 
         // cambiar color a barra inferior del cel

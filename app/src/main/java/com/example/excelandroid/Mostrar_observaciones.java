@@ -10,8 +10,11 @@ import androidx.core.content.FileProvider;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,10 +23,12 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -44,31 +49,41 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import static android.os.Environment.DIRECTORY_PICTURES;
 import static android.os.Environment.getExternalStoragePublicDirectory;
 
 public class Mostrar_observaciones extends AppCompatActivity {
 
-    ContentValues val = new ContentValues();
-    SQLiteDatabase db;
 
-    public static final int REQUEST_CODE = 105;
     ImageView imagen_1;
-    Button tomar_foto,galeria;
-    String currentPhotoPath;
+    Button seleccion,guardar;
+
     Button botonobs;
     EditText resumen_reunion;
     String arrobs1[],camilo[];
@@ -77,7 +92,27 @@ public class Mostrar_observaciones extends AppCompatActivity {
     RequestQueue rq;
     JsonRequest jrq;
     RequestQueue requestQueue;
-   // String ip="192.168.102.61";
+    String rutaimagen="";
+    String urli ="http://192.168.1.56/";
+    String urlcompleta="";
+
+    Bitmap FixBitmap;
+    ProgressDialog progressDialog ;
+    ByteArrayOutputStream byteArrayOutputStream ;
+    byte[] byteArray ;
+    String ConvertImage ;
+    String GetImageNameFromEditText;
+    HttpURLConnection httpURLConnection ;
+    URL url;
+    OutputStream outputStream;
+    BufferedWriter bufferedWriter ;
+    int RC ;
+    BufferedReader bufferedReader ;
+    StringBuilder stringBuilder;
+    boolean check = true;
+    private int GALLERY = 1, CAMERA = 2;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,59 +131,53 @@ public class Mostrar_observaciones extends AppCompatActivity {
 
         // inicializamos variables para la camara y galeria
         imagen_1 = findViewById(R.id.imagen_1);
-        tomar_foto = findViewById(R.id.tomar_foto);
-        galeria = findViewById(R.id.button2);
+
+        seleccion = findViewById(R.id.seleccion_imagen);
         // finaliza variables para la camara y galeria
 
         botonobs=findViewById(R.id.boton_obs);
+        guardar=findViewById(R.id.guardarcambios);
         resumen_reunion=findViewById(R.id.resumen_reunion);
         listView=findViewById(R.id.list_view);
 
         rq= Volley.newRequestQueue(this);
-// llamamos al metodo para actualizar la activity
-
-
 
         final String ident_obs = getIntent().getExtras().getString("identificador2");
         final String recuperar = getIntent().getExtras().getString("plano1");
 
-
-
         buscarobservaciones("http://"+ip+"/login/buscar_observaciones_plano.php?identificador="+ident_obs+"");
+
+        buscarimagen("http://192.168.1.56/login/buscar_imagen_obs.php?image_name="+ident_obs+"");
 
         // REGISTRAMOS NUESTROS DATOS
         botonobs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-          registrarobservaciones("http://"+ip+"/login/registrar_observacion.php");
-
-
+            registrarobservaciones("http://"+ip+"/login/registrar_observacion.php");
             }
         });
 
-        // empieza codigo para llamar la camara y abrir la galeria *********************************************************************************
 
-       galeria.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent galeria=new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-               startActivityForResult(galeria,REQUEST_CODE);
-           }
-       });
-
-
-        tomar_foto.setOnClickListener(new View.OnClickListener() {
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        seleccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // abrir camera
-                asKCameraPermission();
+                showPictureDialog();
             }
         });
+
+        GetImageNameFromEditText = ident_obs;
+
+        guardar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                UploadImageToServer();
+            }
+        });
+
+
     }
-
-
 
     // metodo para registrar observaciones
 
@@ -235,113 +264,210 @@ public class Mostrar_observaciones extends AppCompatActivity {
 
 
 
-    private void asKCameraPermission() {
-            if (ContextCompat.checkSelfPermission(Mostrar_observaciones.this,
-                    Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(Mostrar_observaciones.this,
-                        new String[]{
-                                Manifest.permission.CAMERA
-                        }, 100);
-            } else {
-                dispatchTakePictureIntent();
-            }
+    private void showPictureDialog(){
+        AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
+        pictureDialog.setTitle("Seleccione una opcion");
+        String[] pictureDialogItems = {
+                "Elegir de la galería",
+                "Tomar foto de la camara" };
+        pictureDialog.setItems(pictureDialogItems,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case 0:
+                                choosePhotoFromGallary();
+                                break;
+                            case 1:
+                                takePhotoFromCamera();
+                                break;
+                        }
+                    }
+                });
+        pictureDialog.show();
+    }
+    public void choosePhotoFromGallary() {
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(galleryIntent, GALLERY);
+    }
 
+    private void takePhotoFromCamera() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, CAMERA);
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if(requestCode==100){
-            if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED){
-                dispatchTakePictureIntent();
-            }else {
-                Toast.makeText(this, "se requiere el permiso para acceder a la camara", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 100) {
-            if(resultCode==Activity.RESULT_OK){
-                File f = new File(currentPhotoPath);
-                imagen_1.setImageURI(Uri.fromFile(f));
+        if (resultCode == this.RESULT_CANCELED) {
+            return;
+        }
+        if (requestCode == GALLERY) {
+            if (data != null) {
+                Uri contentURI = data.getData();
+                try {
+                    FixBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), contentURI);
+                    // String path = saveImage(bitmap);
+                    //Toast.makeText(MainActivity.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+                    imagen_1.setImageBitmap(FixBitmap);
+                    seleccion.setVisibility(View.VISIBLE);
 
-                Log.d("tag", "ABsolute Url of Image is"+Uri.fromFile(f));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(Mostrar_observaciones.this, "Failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else if (requestCode == CAMERA) {
+            FixBitmap = (Bitmap) data.getExtras().get("data");
+            imagen_1.setImageBitmap(FixBitmap);
+            seleccion.setVisibility(View.VISIBLE);
 
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                Uri contentUri = Uri.fromFile(f);
-                mediaScanIntent.setData(contentUri);
-                this.sendBroadcast(mediaScanIntent);
+            //  saveImage(thumbnail);
+            //Toast.makeText(ShadiRegistrationPart5.this, "Image Saved!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void UploadImageToServer(){
+
+        FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
+        ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        class AsyncTaskUploadClass extends AsyncTask<Void,Void,String> {
+
+
+            @Override
+            protected void onPreExecute() {
+
+                super.onPreExecute();
+
+                progressDialog = ProgressDialog.show(Mostrar_observaciones.this,"La imagen se esta subiendo al servidor","Por favor espere",false,false);
             }
 
-        }
-        if (requestCode == REQUEST_CODE) {
-            if(resultCode==Activity.RESULT_OK){
-                Uri contentUri = data.getData();
-                @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                String imageFileName = "JPEG_" + timeStamp + "_"+getFileExt(contentUri);
-                Log.d("tag", "on ActivityResult: Gallery Image Uri"+imageFileName);
-
-              imagen_1.setImageURI(contentUri);
+            @Override
+            protected void onPostExecute(String string1) {
+                super.onPostExecute(string1);
+                progressDialog.dismiss();
+                Toast.makeText(Mostrar_observaciones.this,string1,Toast.LENGTH_LONG).show();
             }
 
+            @Override
+            protected String doInBackground(Void... params) {
+                Mostrar_observaciones.ImageProcessClass imageProcessClass = new Mostrar_observaciones.ImageProcessClass();
+                HashMap<String,String> HashMapParams = new HashMap<String,String>();
+
+                HashMapParams.put("image_data",ConvertImage);
+                HashMapParams.put("image_tag", GetImageNameFromEditText);
+
+                String FinalData = imageProcessClass.ImageHttpRequest("http://192.168.1.56/login/guardar_imagen_obs.php", HashMapParams);
+
+                // onBackPressed();
+
+                return FinalData;
+            }
         }
-
-
+        AsyncTaskUploadClass AsyncTaskUploadClassOBJ = new AsyncTaskUploadClass();
+        AsyncTaskUploadClassOBJ.execute();
     }
 
-    private String getFileExt(Uri contentUri) {
-        ContentResolver c= getContentResolver();
-        MimeTypeMap mime = MimeTypeMap.getSingleton();
-        return mime.getExtensionFromMimeType(c.getType(contentUri));
-    }
-
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        @SuppressLint("SimpleDateFormat") String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-
-
-       File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-     // File storageDir=Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
+    public class ImageProcessClass{
+        public String ImageHttpRequest(String requestURL,HashMap<String, String> PData) {
+            StringBuilder stringBuilder = new StringBuilder();
             try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-                // Error occurred while creating the File
+                url = new URL(requestURL);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setReadTimeout(20000);
+                httpURLConnection.setConnectTimeout(20000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
+                outputStream = httpURLConnection.getOutputStream();
+                bufferedWriter = new BufferedWriter(
+                        new OutputStreamWriter(outputStream, "UTF-8"));
+                bufferedWriter.write(bufferedWriterDataFN(PData));
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                outputStream.close();
+                RC = httpURLConnection.getResponseCode();
 
+                if (RC == HttpsURLConnection.HTTP_OK) {
+                    bufferedReader = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream()));
+                    stringBuilder = new StringBuilder();
+                    String RC2;
+                    while ((RC2 = bufferedReader.readLine()) != null){
+                        stringBuilder.append(RC2);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
-                        "com.example.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, 100);
+            return stringBuilder.toString();
+        }
+
+        private String bufferedWriterDataFN(HashMap<String, String> HashMapParams) throws UnsupportedEncodingException {
+            stringBuilder = new StringBuilder();
+
+            for (Map.Entry<String, String> KEY : HashMapParams.entrySet()) {
+                if (check)
+                    check = false;
+                else
+                    stringBuilder.append("&");
+                stringBuilder.append(URLEncoder.encode(KEY.getKey(), "UTF-8"));
+                stringBuilder.append("=");
+                stringBuilder.append(URLEncoder.encode(KEY.getValue(), "UTF-8"));
+            }
+            return stringBuilder.toString();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 5) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Now user should be able to use camera
+            }
+            else {
+                Toast.makeText(Mostrar_observaciones.this, "No podemos acceder a la camara..Por favor permita el acceso", Toast.LENGTH_LONG).show();
             }
         }
     }
+
+
+    private void buscarimagen(String URL1) {
+        final JsonArrayRequest jsonArrayRequest=new JsonArrayRequest(URL1, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+                JSONObject jsonObject = null;
+
+                for (int i = 0; i < response.length(); i++) {
+
+                    try {
+                        jsonObject = response.getJSONObject(i);
+                        rutaimagen=(jsonObject.getString("image_path"));
+                        urli = "http://192.168.1.56/";
+                        urlcompleta=urli+rutaimagen;
+
+                        Picasso.get().load(urlcompleta).into(imagen_1);
+
+                    } catch (JSONException e) {
+                        Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                //Toast.makeText(getApplicationContext(), "error de conexion plano 1", Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue=Volley.newRequestQueue(this);
+        requestQueue.add(jsonArrayRequest);
+    }
+
 
 }

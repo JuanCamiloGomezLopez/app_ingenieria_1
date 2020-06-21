@@ -141,10 +141,9 @@
     <string name="nombre_plano1">TITULO PLANO</string>
     <string name="dibujante_plano">DIBUJANTE</string>
     <string name="boton_registrar_plano">REGISTRAR PLANO</string>
-
-
-
-
-
+    <string name="seleccion_imagen">SELECCIONAR IMAGEN</string>
+    <string name="gaurdarcambios">GUARDAR CAMBIOS</string>
+    <string name="titulo_info_imagenes">FOTOGRAFIAS</string>
+    <string name="boton_reunion_3">SUBIR IMAGEN</string>
 
 </resources>

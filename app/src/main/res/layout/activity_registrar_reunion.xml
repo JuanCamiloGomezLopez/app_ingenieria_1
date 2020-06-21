@@ -12,8 +12,8 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="23dp"
-        tools:layout_editor_absoluteY="34dp">
+        tools:layout_editor_absoluteX="-73dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -109,34 +109,6 @@
                         android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/plano_2" />
-
-                    <EditText
-                        android:id="@+id/plano_4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:autofillHints=""
-                        android:ems="10"
-                        android:hint="@string/plano_1"
-                        android:inputType="textPersonName"
-                        android:textColor="#FFFFFF"
-                        android:textColorHint="#C1C0C0"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/plano_3" />
-
-                    <EditText
-                        android:id="@+id/plano_5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:autofillHints=""
-                        android:ems="10"
-                        android:hint="@string/plano_1"
-                        android:inputType="textPersonName"
-                        android:textColor="#FFFFFF"
-                        android:textColorHint="#C1C0C0"
-                        android:textSize="14sp"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/plano_4" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -317,8 +289,8 @@
 
                     <EditText
                         android:id="@+id/resumen_reunion"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
+                        android:layout_width="385dp"
+                        android:layout_height="94dp"
                         android:autofillHints=""
                         android:ems="10"
                         android:gravity="start|top"
@@ -344,10 +316,8 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginEnd="25dp"
-                android:layout_marginBottom="10dp"
                 app:cardBackgroundColor="#323131"
                 app:cardCornerRadius="15dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.473"
                 app:layout_constraintStart_toStartOf="parent"
@@ -401,23 +371,93 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tema_reunion" />
 
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardimage"
+                android:layout_width="380dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:cardBackgroundColor="#323131"
+                app:cardCornerRadius="15dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cardView4a">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
                     <Button
-                        android:id="@+id/boton_reun"
+                        android:id="@+id/boton_reun3"
                         style="@style/Widget.AppCompat.Button.Borderless"
-                        android:layout_width="220dp"
+                        android:layout_width="170dp"
                         android:layout_height="40dp"
-                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:background="@drawable/boton_tipico"
-                        android:text="@string/registrar_reunion"
-                        android:textColor="#009688"
+                        android:text="@string/boton_reunion_3"
+                        android:textColor="#FFFFFF"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imagen4" />
+
+                    <Button
+                        android:id="@+id/boton_reun2"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="170dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/boton_tipico"
+                        android:text="@string/seleccion_imagen"
+                        android:textColor="@color/design_default_color_on_primary"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/hora_reunion" />
+                        app:layout_constraintTop_toBottomOf="@+id/imagen4" />
+
+                    <ImageView
+                        android:id="@+id/imagen4"
+                        android:layout_width="364dp"
+                        android:layout_height="274dp"
+                        android:layout_marginTop="10dp"
+                        android:contentDescription="@string/app_name"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/titulo_info_imagenes"
+                        app:srcCompat="@drawable/ic_menu_camera" />
+
+                    <TextView
+                        android:id="@+id/titulo_info_imagenes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/titulo_info_imagenes"
+                        android:textAlignment="center"
+                        android:textColor="#C1C0C0"
+                        android:textSize="14sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
+
+            <Button
+                android:id="@+id/boton_reun"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/boton_tipico"
+                android:text="@string/registrar_reunion"
+                android:textColor="#009688"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardimage" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

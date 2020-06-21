@@ -26,7 +26,7 @@ import com.example.excelandroid.Resumen_reuniones;
 
 public class HomeFragment extends Fragment {
 
-    String ip="192.168.103.29";
+    String ip="192.168.1.56";
 
      private TextView bienvenido;
      String d;
